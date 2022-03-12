@@ -33,7 +33,12 @@ export const Step = styled.div`
 export const Input = styled(TextField)`
     
 `
+export const SubmitWrapper = styled.div`
+    display: flex;
+    flex-direction: center;
+    justify-content: center;
+`
 export const Submit = styled(Button)`
     width: 90px;
-    margin: auto;
+    
 `

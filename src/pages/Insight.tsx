@@ -5,10 +5,21 @@ import {
   Footprints,
   Step,
   Input,
+  SubmitWrapper,
   Submit,
-} from "../../styles/MainPage.styles";
+} from "../../styles/Insight.styles";
+import { useState } from "react";
+import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
+import { firebaseApp } from "../../pages/_app";
 
 export default function MainPage() {
+  const [date, setDate] = useState("");
+  const [pickup, setPickup] = useState("");
+  function onClickSubmit() {
+    const day = collection(getFirestore(firebaseApp), "day");
+    addDoc(day, {});
+  }
+
   return (
     <Wrapper>
       <Title>오늘의 기록</Title>
@@ -55,7 +66,12 @@ export default function MainPage() {
           <Input label="특이사항" />
         </Step>
       </Footprints>
-      <Submit variant="outlined">등록하기</Submit>
+      <SubmitWrapper>
+        <Submit variant="contained">등록하기</Submit>
+        <Submit variant="text">
+          <a href="list/">목록보기</a>
+        </Submit>
+      </SubmitWrapper>
     </Wrapper>
   );
 }
