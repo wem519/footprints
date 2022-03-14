@@ -9,7 +9,13 @@ import {
   Submit,
 } from "../../styles/Insight.styles";
 import { useState } from "react";
-import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  doc,
+  setDoc,
+} from "firebase/firestore";
 import { firebaseApp } from "../../pages/_app";
 
 export default function MainPage() {
@@ -49,18 +55,23 @@ export default function MainPage() {
     const day = collection(getFirestore(firebaseApp), "day");
     try {
       await addDoc(day, {
-        date: date,
-        pickup: pickup,
-        distance: distance,
-        walk: walk,
-        kcal: kcal,
-        walkdistance: walkdistance,
-        significant: significant,
+        // date: date,
+        // pickup: pickup,
+        // distance: distance,
+        // walk: walk,
+        // kcal: kcal,
+        // walkdistance: walkdistance,
+        // significant: significant,
+        date: "2022.03.06",
       });
+
       console.log(day);
     } catch (error) {
       console.log(error);
     }
+    await setDoc(doc(collection(getFirestore(firebaseApp), `daylist`), date), {
+      date: "2022.03.06",
+    });
   }
 
   return (
