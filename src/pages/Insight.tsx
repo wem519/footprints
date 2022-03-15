@@ -55,23 +55,28 @@ export default function MainPage() {
     const day = collection(getFirestore(firebaseApp), "day");
     try {
       await addDoc(day, {
-        // date: date,
-        // pickup: pickup,
-        // distance: distance,
-        // walk: walk,
-        // kcal: kcal,
-        // walkdistance: walkdistance,
-        // significant: significant,
-        date: "2022.03.06",
+        date: date,
+        pickup: `${pickup}건`,
+        distance: `${distance}km`,
+        walk: `${walk}보`,
+        kcal: `${kcal}Kcal`,
+        walkdistance: `${walkdistance}km`,
+        significant: `${significant}`,
       });
 
       console.log(day);
     } catch (error) {
       console.log(error);
     }
-    await setDoc(doc(collection(getFirestore(firebaseApp), `daylist`), date), {
-      date: "2022.03.06",
-    });
+    // await setDoc(doc(collection(getFirestore(firebaseApp), `daylist`)), {
+    //   date: date,
+    //   pickup: pickup,
+    //   distance: distance,
+    //   walk: walk,
+    //   kcal: kcal,
+    //   walkdistance: walkdistance,
+    //   significant: significant,
+    // });
   }
 
   return (
