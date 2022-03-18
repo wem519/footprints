@@ -17,6 +17,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { firebaseApp } from "../../pages/_app";
+import { useRouter } from "next/router";
 
 export default function MainPage() {
   const [date, setDate] = useState("");
@@ -26,6 +27,8 @@ export default function MainPage() {
   const [kcal, setKcal] = useState("");
   const [walkdistance, setWalkdistance] = useState("");
   const [significant, setSignificant] = useState("");
+
+  const router = useRouter();
 
   function onChangeDate(event: any) {
     setDate(event.target.value);
@@ -68,15 +71,13 @@ export default function MainPage() {
     } catch (error) {
       console.log(error);
     }
-    // await setDoc(doc(collection(getFirestore(firebaseApp), `daylist`)), {
-    //   date: date,
-    //   pickup: pickup,
-    //   distance: distance,
-    //   walk: walk,
-    //   kcal: kcal,
-    //   walkdistance: walkdistance,
-    //   significant: significant,
-    // });
+    const daylist = doc(collection(getFirestore(firebaseApp), "daylist"), date);
+    await setDoc(daylist, {
+      date: date,
+    });
+  }
+  function onClickMoveToList() {
+    router.push("/list");
   }
 
   return (
@@ -140,8 +141,8 @@ export default function MainPage() {
         <Submit variant="contained" onClick={onClickSubmit}>
           등록하기
         </Submit>
-        <Submit variant="text">
-          <a href="list/">목록보기</a>
+        <Submit variant="text" onClick={onClickMoveToList}>
+          목록보기
         </Submit>
       </SubmitWrapper>
     </Wrapper>
