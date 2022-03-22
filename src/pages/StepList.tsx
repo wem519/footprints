@@ -17,24 +17,14 @@ export default function StepList() {
   const router = useRouter();
   const [daylist, setDaylist] = useState([]);
   useEffect(() => {
-    // async function onLoad() {
-    //   const daylist = collection(getFirestore(firebaseApp), "daylist");
-    //   const result = await getDocs(daylist);
-    //   const docs = result.docs.map((el) => el.data());
-    //   setDaylist(docs);
-    //   console.log(docs);
-    // }
-    // onLoad();
-    const daylist = collection(getFirestore(firebaseApp), "daylist");
-    const res = new Promise(function (resolve) {
-      resolve(getDocs(daylist));
-    }).then((result) => {
-      console.log(
-        result.docs.map((el) => {
-          el.data();
-        })
-      );
-    });
+    async function onLoad() {
+      const daylist = collection(getFirestore(firebaseApp), "daylist");
+      const result = await getDocs(daylist);
+      const docs = result.docs.map((el) => el.data());
+      setDaylist(docs);
+      console.log(docs);
+    }
+    onLoad();
   }, []);
 
   return (
@@ -44,7 +34,11 @@ export default function StepList() {
         {/* {daylist.map((el) => {
           <div>{el}</div>;
         })} */}
-        <div></div>
+        <div>
+          {daylist.map((el) => (
+            <div key={el}>{el.date}</div>
+          ))}
+        </div>
         {/* <div onClick={onClickMoveToDetail}>3.9(수)</div>
         <div onClick={onClickMoveToDetail}>3.10(목)</div>
         <div onClick={onClickMoveToDetail}>3.1(금)</div> */}
