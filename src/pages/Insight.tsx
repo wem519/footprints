@@ -55,9 +55,9 @@ export default function MainPage() {
   }
 
   async function onClickSubmit() {
-    const day = collection(getFirestore(firebaseApp), "day");
+    const day = doc(collection(getFirestore(firebaseApp), "day"), date);
     try {
-      await addDoc(day, {
+      await setDoc(day, {
         date: date,
         pickup: `${pickup}건`,
         distance: `${distance}km`,
@@ -71,10 +71,6 @@ export default function MainPage() {
     } catch (error) {
       console.log(error);
     }
-    const daylist = doc(collection(getFirestore(firebaseApp), "daylist"), date);
-    await setDoc(daylist, {
-      date: date,
-    });
   }
   function onClickMoveToList() {
     router.push("/list");

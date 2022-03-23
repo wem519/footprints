@@ -16,6 +16,7 @@ import { firebaseApp } from "../../pages/_app";
 export default function StepList() {
   const router = useRouter();
   const [daylist, setDaylist] = useState([]);
+
   useEffect(() => {
     async function onLoad() {
       const daylist = collection(getFirestore(firebaseApp), "daylist");
@@ -27,6 +28,10 @@ export default function StepList() {
     onLoad();
   }, []);
 
+  function onClickMoveToDetail() {
+    router.push(`list/day`);
+  }
+
   return (
     <Wrapper>
       <Title>기록 리스트</Title>
@@ -34,9 +39,9 @@ export default function StepList() {
         {/* {daylist.map((el) => {
           <div>{el}</div>;
         })} */}
-        <div>
+        <div onClick={onClickMoveToDetail}>
           {daylist.map((el) => (
-            <div key={el}>{el.date}</div>
+            <div key={el.index}>{el.date}</div>
           ))}
         </div>
         {/* <div onClick={onClickMoveToDetail}>3.9(수)</div>
