@@ -18,7 +18,7 @@ export default function Oneday() {
     async function onLoad() {
       const dayRef = query(
         collection(getFirestore(firebaseApp), "day"),
-        orderBy("date", "desc")
+        where("date", "==", "2022-03-06")
       );
       const result = await getDocs(dayRef);
       const docs = result.docs.map((el) => el.data());
@@ -42,7 +42,7 @@ export default function Oneday() {
 
   return (
     <>
-      <div>{router.query.day}상세페이지</div>
+      <div>{router.query.id}상세페이지</div>
     </>
   );
 }

@@ -12,6 +12,7 @@ import {
   where,
 } from "firebase/firestore";
 import { firebaseApp } from "../../pages/_app";
+import Insight from "./Insight";
 
 export default function StepList() {
   const router = useRouter();
@@ -19,8 +20,8 @@ export default function StepList() {
 
   useEffect(() => {
     async function onLoad() {
-      const daylist = collection(getFirestore(firebaseApp), "daylist");
-      const result = await getDocs(daylist);
+      const day = collection(getFirestore(firebaseApp), "day");
+      const result = await getDocs(day);
       const docs = result.docs.map((el) => el.data());
       setDaylist(docs);
       console.log(docs);
@@ -29,12 +30,13 @@ export default function StepList() {
   }, []);
 
   function onClickMoveToDetail() {
-    router.push(`list/day`);
+    router.push(`list/${id}`);
   }
 
   return (
     <Wrapper>
       <Title>기록 리스트</Title>
+
       <div>
         {/* {daylist.map((el) => {
           <div>{el}</div>;

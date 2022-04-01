@@ -12,9 +12,11 @@ import { useState } from "react";
 import {
   getFirestore,
   collection,
-  addDoc,
+  query,
   doc,
+  addDoc,
   setDoc,
+  where,
 } from "firebase/firestore";
 import { firebaseApp } from "../../pages/_app";
 import { useRouter } from "next/router";
@@ -29,6 +31,7 @@ export default function MainPage() {
   const [significant, setSignificant] = useState("");
 
   const router = useRouter();
+  const id = `${router.query.id}`;
 
   function onChangeDate(event: any) {
     setDate(event.target.value);
@@ -55,9 +58,9 @@ export default function MainPage() {
   }
 
   async function onClickSubmit() {
-    const day = doc(collection(getFirestore(firebaseApp), "day"), date);
+    const day = collection(getFirestore(firebaseApp), "day");
     try {
-      await setDoc(day, {
+      const result = await addDoc(day, {
         date: date,
         pickup: `${pickup}건`,
         distance: `${distance}km`,
@@ -66,11 +69,30 @@ export default function MainPage() {
         walkdistance: `${walkdistance}km`,
         significant: `${significant}`,
       });
+      console.log(result.id);
+      router.push(`list/${result.id}`);
+
+      //   await setDoc(doc(collection(getFirestore(firebaseApp), "daylist"), id), {
+      //     id: id,
+      //     date: date,
+      //     pickup: `${pickup}건`,
+      //     distance: `${distance}km`,
+      //     walk: `${walk}보`,
+      //     kcal: `${kcal}Kcal`,
+      //     walkdistance: `${walkdistance}km`,
+      //     significant: `${significant}`,
+      //   });
 
       console.log(day);
     } catch (error) {
       console.log(error);
     }
+  }
+  function loadDate() {
+    const selectedDate = query(
+      collection(getFirestore(firebaseApp), "date"),
+      where("id", "==", id)
+    );
   }
   function onClickMoveToList() {
     router.push("/list");
