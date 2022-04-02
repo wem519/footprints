@@ -58,9 +58,9 @@ export default function MainPage() {
   }
 
   async function onClickSubmit() {
-    const day = collection(getFirestore(firebaseApp), "day");
+    const day = doc(collection(getFirestore(firebaseApp), "day"), date);
     try {
-      const result = await addDoc(day, {
+      const result = await setDoc(day, {
         date: date,
         pickup: `${pickup}건`,
         distance: `${distance}km`,
@@ -69,8 +69,8 @@ export default function MainPage() {
         walkdistance: `${walkdistance}km`,
         significant: `${significant}`,
       });
-      console.log(result.id);
-      router.push(`list/${result.id}`);
+      console.log(result);
+      //   router.push(`list/${result.id}`);
 
       //   await setDoc(doc(collection(getFirestore(firebaseApp), "daylist"), id), {
       //     id: id,
