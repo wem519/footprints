@@ -20,7 +20,7 @@ export default function StepList() {
 
   useEffect(() => {
     async function onLoad() {
-      const day = collection(getFirestore(firebaseApp), "day");
+      const day = collection(getFirestore(firebaseApp), "daylist");
       const result = await getDocs(day);
       const docs = result.docs.map((el) => el.data());
       setDaylist(docs);
@@ -29,8 +29,8 @@ export default function StepList() {
     onLoad();
   }, []);
 
-  function onClickMoveToDetail() {
-    router.push(`list/${id}`);
+  function onClickMoveToDetail(event) {
+    router.push(`list/${event.currentTaget.id}`);
   }
 
   return (

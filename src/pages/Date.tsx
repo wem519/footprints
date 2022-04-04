@@ -18,7 +18,7 @@ export default function Oneday() {
     async function onLoad() {
       const dayRef = query(
         collection(getFirestore(firebaseApp), "day"),
-        where("date", "==", "2022-03-06")
+        where("date", "==", "2022-04-06")
       );
       const result = await getDocs(dayRef);
       const docs = result.docs.map((el) => el.data());
